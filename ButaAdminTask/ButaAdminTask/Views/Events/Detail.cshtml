@@ -1,0 +1,25 @@
+﻿@model Events
+@{ ViewData["Title"] = "Detail"; }
+
+<div class="row">
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+
+
+                <h4> İştirakçı : @Model.EventName</h4>
+                <div> Yaşı : @Model.EventPlace</div>
+                <div> Cinsi : @Model.Duration</div>
+                <div> Təhsili : @Model.EventDate</div>
+               
+
+
+
+
+                <a class="btn btn-secondary  btn-sm my-3" asp-action="Index">Geriyə</a>
+            </div>
+        </div>
+    </div>
+</div>
+

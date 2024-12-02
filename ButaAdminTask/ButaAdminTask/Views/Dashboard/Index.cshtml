@@ -1,0 +1,227 @@
+﻿@model List<Events>
+
+
+    <div class="row">
+        <div class="col-md-12 grid-margin">
+            <div class="row">
+                <div class="col-12 col-xl-8 mb-4 mb-xl-0">
+                    <h3 class="font-weight-bold">Xoş gəlmişsiniz!</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-title mb-3">Yaxınlaşan görüşləriniz</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-borderless">
+                            <thead>
+                                <tr>
+                                    <th>Görüş Adı</th>
+                                    <th>Görüşün Tarixi</th>
+                                    <th>Görüşün Müddəti</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (Events events in Model)
+                                {
+
+                                    <tr>
+                                        <td>@events.EventName</td>
+                                        <td style="text-align: center">@events.EventDate.ToString("dd.MM.yyyy HH:mm")</td>
+                                        <td style="text-align: center">@events.Duration</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @await Component.InvokeAsync("Widgets")
+    </div>
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card position-relative">
+                <div class="card-body">
+                    <div class="row">
+                        
+                        <div class="col-md-12 col-xl-9">
+                            <div class="row">
+                                <div class="col-md-7 border-right">
+                                    <canvas id="barChart" width="400" height="400"></canvas>
+                                </div>
+                                <div class="col-md-5 mt-3">
+                                    <canvas id="pieChart" width="400" height="400"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div>
+    </div>
+
+
+
+    @section Scripts {
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <script>
+        function fetchData() {
+            $.ajax({
+                url: '@Url.Action("GenderDistribution", "Dashboard")',
+                type: 'GET',
+                success: function (data) {
+                    updatePieChart(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        }
+
+        function updatePieChart(data) {
+            var ctx = document.getElementById('pieChart').getContext('2d');
+            var pieChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Kişi', 'Qadın'],
+                    datasets: [{
+                        label: 'Gender Distribution',
+                        data: [data.male, data.female],
+                        backgroundColor: [
+                            'rgba(54, 162, 235)',
+                            'rgba(255, 99, 132)'
+                        ],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                boxWidth: 20,
+                                padding: 20
+                            }
+                        }
+                    },
+                    layout: {
+                        padding: {
+                            left: 70,
+                            right: 70
+                        }
+                    }
+                }
+            });
+        }
+
+        fetchData();
+        </script>
+
+        <script>
+
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("UniversityMemberCount", "Dashboard")',
+                type: 'GET',
+                success: function (data) {
+                    console.log(data); // Log the data received from the AJAX call
+                    renderBarChart(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+
+        function renderBarChart(data) {
+            console.log('Rendering bar chart with data:', data);
+
+            var universities = data.map(item => item.university);
+            var memberCounts = data.map(item => item.memberCount);
+
+            var ctx = document.getElementById('barChart').getContext('2d');
+            var barChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: universities,
+                    datasets: [{
+                        label: 'İştirakçı sayı',
+                        data: memberCounts,
+                        backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    indexAxis: 'x',
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        </script>
+
+        <script>
+        $(document).ready(function () {
+            $.ajax({
+                url: '@Url.Action("AgeMemberCount", "Dashboard")',
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    renderDoughnutPieChart(data);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Error fetching data:', error);
+                }
+            });
+        });
+
+        function renderDoughnutPieChart(data) {
+            console.log("salam", data);
+
+            var labels = data.map(item => item.age);
+            var counts = data.map(item => item.memberCount);
+
+            var ctx = document.getElementById('doughnutPieChart').getContext('2d');
+            var doughnutPieChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: counts,
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.7)',
+                            'rgba(54, 162, 235, 0.7)',
+                            'rgba(255, 206, 86, 0.7)',
+                            'rgba(75, 192, 192, 0.7)',
+                            'rgba(153, 102, 255, 0.7)'
+                        ],
+                        borderColor: 'rgba(255, 255, 255, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true
+                }
+            });
+        }
+        </script>
+
+
+    }

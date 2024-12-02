@@ -1,0 +1,53 @@
+﻿@model Events
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Redaktə edin</h4>
+
+                <form method="post" enctype="multipart/form-data" class="forms-sample">
+
+
+                    <div class="form-group">
+                        <label asp-for="EventName">Görüşün adı</label>
+                        <input asp-for="EventName" class="form-control">
+                        <span asp-validation-for="EventName" class="alert-danger"></span>
+
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="EventPlace">Görüşün keçiriləcəyi məkan</label>
+                        <input asp-for="EventPlace" class="form-control">
+                        <span asp-validation-for="EventPlace" class="alert-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Duration">Müddəti</label>
+                        <input asp-for="Duration" class="form-control">
+                        <span asp-validation-for="Duration" class="alert-danger"></span>
+
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EventDate">Görüşün tarixi</label>
+                        <input asp-for="EventDate" class="form-control">
+                        <span asp-validation-for="EventDate" class="alert-danger"></span>
+
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary me-2">Qeyd edin</button>
+                    <a asp-action="Index" class="btn btn-light">Çıxın</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}
+
+
+

@@ -1,0 +1,70 @@
+﻿@model Members
+<div class="row">
+    <div class="col-md-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">İştirakçı yaradın</h4>
+
+
+
+            </div>
+            <form method="post" enctype="multipart/form-data" class="forms-sample">
+                <div class="form-group">
+                    <label asp-for="FullName">İştirakçı</label>
+                    <input asp-for="FullName" class="form-control">
+                    <span asp-validation-for="FullName" class="alert-danger"></span>
+
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Age">Yaşı</label>
+                    <input asp-for="Age" class="form-control">
+                    <span asp-validation-for="Age" class="alert-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Gender">Cinsi</label>
+                    <input asp-for="Gender" class="form-control">
+                    <span asp-validation-for="Gender" class="alert-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Education">Təhsili</label>
+                    <input asp-for="Education" class="form-control">
+                    <span asp-validation-for="Education" class="alert-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="University">Universiteti</label>
+                    <input asp-for="University" class="form-control">
+                    <span asp-validation-for="University" class="alert-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Profession">İxtisası</label>
+                    <input asp-for="Profession" class="form-control">
+                    <span asp-validation-for="Profession" class="alert-danger"></span>
+
+                </div>
+                <div class="form-group">
+                    <label asp-for="Course">Kursu</label>
+                    <input asp-for="Course" class="form-control">
+                    <span asp-validation-for="Course" class="alert-danger"></span>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary me-2">Qeyd edin</button>
+                <a asp-action="Index" class="btn btn-light">Çıxın</a>
+            </form>
+        </div>
+        </div>
+    </div>
+
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+}
+
+
+

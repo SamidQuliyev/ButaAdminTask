@@ -1,0 +1,83 @@
+﻿@model List<Events>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+
+
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex justify-content-between align-content-center">
+                    <h4 class="card-title">Görüşlər</h4>
+                    <a asp-action="Create" class="btn btn-primary btn-md my-3 btn-rounded">Yarat</a>
+                </div>
+                <div class="table-responsive">
+
+                    <table id="myTable" class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Görüş Adı</th>
+                                <th>Görüşün Tarixi</th>
+                                <th>Görüşün Müddəti</th>
+                                <th>Lokasiya</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (Events events in Model)
+                            {
+                        <tr>
+
+
+                            <td>
+                                @events.EventName
+                            </td>
+
+                            <td>
+                                @events.EventPlace
+                            </td>
+                            <td>
+                                @events.Duration
+                            </td>
+                            <td>
+                                @events.EventDate
+                            </td>
+                       
+
+
+
+                            <td>
+
+                                <a class="btn btn-warning btn-md btn-rounded" asp-action="Detail"
+                                   asp-route-id="@events.Id">Ətraflı</a>
+                                <a class="btn btn-primary btn-md  btn-rounded" asp-action="Update"
+                                   asp-route-id="@events.Id">Redaktə et</a>
+                                <a class="btn btn-danger btn-md  btn-rounded" asp-action="Delete"
+                                   asp-route-id="@events.Id">Silin</a>
+
+
+
+
+
+                        </tr>
+}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Styles {
+    <link rel="stylesheet" href="~/vendors/datatables.net-bs4/dataTables.bootstrap4.css">
+}
+
+@section Scripts {
+    <script src="~/vendors/datatables.net/jquery.dataTables.js"></script>
+    <script src="~/vendors/datatables.net-bs4/dataTables.bootstrap4.js"></script>
+    <script src="~/js/data-table.js"></script>
+}
